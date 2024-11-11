@@ -28,7 +28,6 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },    -- Автодополнение от LSP
                 { name = "luasnip" },     -- Сниппеты
-            }, {
                 { name = "buffer" },      -- Слова из буфера
                 { name = "path" },        -- Пути к файлам
             }),

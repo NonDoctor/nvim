@@ -23,8 +23,6 @@ require("lazy").setup({
     { import = "themes" },
     -- import your plugins
     { import = "plugins" },
-    -- import languages
-    { import = "languages" },
   },
   -- automatically check for plugin updates
   checker = { enabled = true },
