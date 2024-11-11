@@ -21,7 +21,9 @@ return {
         dependencies = { "williamboman/mason.nvim" },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "gopls", "lua_ls" }, -- Список LSP-серверов для автоматической установки
+                ensure_installed = { 
+                    "pyright", "gopls", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman" 
+                }, -- Список LSP-серверов для автоматической установки
                 automatic_installation = true,
             })
         end,
@@ -39,7 +41,23 @@ return {
             -- Настройка LSP сервера для Go (gopls)
             lspconfig.gopls.setup({})
 
+            -- Настройка LSP для Docker (dockerls)
+            lspconfig.dockerls.setup({})
+
+            -- Настройка LSP для JSON (jsonls)
+            lspconfig.jsonls.setup({})
+
+            -- Настройка LSP для Lua (lua_ls)
             lspconfig.lua_ls.setup({})
+
+            -- Настройка LSP для YAML (yamlls)
+            lspconfig.yamlls.setup({})
+
+            -- Настройка LSP для Taplo (taplo)
+            lspconfig.taplo.setup({})
+
+            -- Настройка LSP для Marksman
+            lspconfig.marksman.setup({})
         end,
     },
 
@@ -49,7 +67,9 @@ return {
         dependencies = { "williamboman/mason.nvim", "jose-elias-alvarez/null-ls.nvim" },
         config = function()
             require("mason-null-ls").setup({
-                ensure_installed = { "black", "goimports", "golangci_lint" }, -- Утилиты для автоматической установки
+                ensure_installed = { 
+                    "black", "goimports", "golangci_lint", "prettier", 
+                }, -- Утилиты для автоматической установки
                 automatic_installation = true,
             })
 
@@ -57,9 +77,19 @@ return {
             local null_ls = require("null-ls")
             null_ls.setup({
                 sources = {
-                    null_ls.builtins.formatting.black, -- Python: black
-                    null_ls.builtins.formatting.goimports, -- Go: goimports
-                    null_ls.builtins.diagnostics.golangci_lint, -- Go: golangci_lint
+                    -- Python: black for formatting
+                    null_ls.builtins.formatting.black,
+                    
+                    -- Go: goimports for formatting
+                    null_ls.builtins.formatting.goimports,
+                    
+                    -- Go: golangci-lint for diagnostics
+                    null_ls.builtins.diagnostics.golangci_lint.with({
+                        extra_args = { "--fast" },  -- You can pass additional args if needed
+                    }),
+
+                    -- Prettier: Code formatter
+                    null_ls.builtins.formatting.prettier,
                 },
             })
         end,
