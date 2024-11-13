@@ -3,7 +3,6 @@ return {
   config = function()
     -- Устанавливаем тему
     vim.cmd("colorscheme gruvbox")
-    
     -- Устанавливаем фон на темный
     -- vim.cmd("set background=dark")  -- или "light", если хотите светлый фон
     --

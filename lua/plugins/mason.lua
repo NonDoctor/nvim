@@ -21,8 +21,8 @@ return {
         dependencies = { "williamboman/mason.nvim" },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { 
-                    "pyright", "gopls", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman" 
+                ensure_installed = {
+                    "pyright", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman"
                 }, -- Список LSP-серверов для автоматической установки
                 automatic_installation = true,
             })
@@ -37,9 +37,6 @@ return {
 
             -- Настройка LSP сервера для Python (pyright)
             lspconfig.pyright.setup({})
-
-            -- Настройка LSP сервера для Go (gopls)
-            lspconfig.gopls.setup({})
 
             -- Настройка LSP для Docker (dockerls)
             lspconfig.dockerls.setup({})
@@ -67,8 +64,8 @@ return {
         dependencies = { "williamboman/mason.nvim", "jose-elias-alvarez/null-ls.nvim" },
         config = function()
             require("mason-null-ls").setup({
-                ensure_installed = { 
-                    "black", "goimports", "golangci_lint", "prettier", 
+                ensure_installed = {
+                    "black", "prettier"
                 }, -- Утилиты для автоматической установки
                 automatic_installation = true,
             })
@@ -79,15 +76,6 @@ return {
                 sources = {
                     -- Python: black for formatting
                     null_ls.builtins.formatting.black,
-                    
-                    -- Go: goimports for formatting
-                    null_ls.builtins.formatting.goimports,
-                    
-                    -- Go: golangci-lint for diagnostics
-                    null_ls.builtins.diagnostics.golangci_lint.with({
-                        extra_args = { "--fast" },  -- You can pass additional args if needed
-                    }),
-
                     -- Prettier: Code formatter
                     null_ls.builtins.formatting.prettier,
                 },
