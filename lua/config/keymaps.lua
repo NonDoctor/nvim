@@ -39,12 +39,13 @@ map('n', '<C-l>', '<C-w>l', opts)
 map('n', '<Tab>', ':BufferLineCycleNext<CR>', opts)
 map('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', opts)
 
--- Закрыть текущий буфер с сохранением остальных
-map('n', '<A-c>', ':bdelete<CR>', opts)
+-- Закрыть буфер и перейти на предыдущее окно
+map('n', '<A-c>', ':wincmd p | bdelete<CR>', opts)
+
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<A-b>', builtin.find_files, opts)
-vim.keymap.set('n', '<A-f>', builtin.current_buffer_fuzzy_find, opts)
+vim.keymap.set('n', '<A-f>', require('telescope.builtin').live_grep, opts)
 
 -- Перемещение на 20 строк вниз с помощью Shift+jk
 map('n', '<S-j>', '10j', opts)
@@ -96,3 +97,42 @@ map('o', 'L', 'g_', opts)
 
 -- Не помню но надо
 map('n', '<A-d>', '<C-o>', opts)
+
+-- Глобальная функция для замены текста в нормальном режиме
+_G.replace_selected_or_prompt = function()
+    -- Запрашиваем шаблон поиска
+    local search_pattern = vim.fn.input("Что меняем: ")
+    if search_pattern == "" then
+        print("Шаблон поиска не может быть пустым!")
+        return
+    end
+
+    -- Запрашиваем текст для замены
+    local replacement = vim.fn.input("На что заменить: ")
+
+    -- Выполняем замену
+    local command = string.format("%%s/%s/%s/g", vim.fn.escape(search_pattern, "/\\."), vim.fn.escape(replacement, "/\\"))
+    vim.cmd(command)
+
+    -- Переход в нормальный режим после выполнения замены
+    vim.cmd("normal! n")
+end
+
+-- Привязываем Shift+R к функции в нормальном режиме
+map( "n", "R", "<cmd>lua replace_selected_or_prompt()<CR>", opts)
+-- Горячие клавиши для создания окон (сплитов)
+map('n', '<C-w><C-h>', ':vsplit<CR>', opts)  -- Вертикальный сплит (слева)
+map('n', '<C-w><C-j>', ':split<CR>', opts)    -- Горизонтальный сплит (снизу)
+map('n', '<C-w><C-k>', ':split<CR>', opts)    -- Горизонтальный сплит (сверху)
+map('n', '<C-w><C-l>', ':vsplit<CR>', opts)  -- Вертикальный сплит (справа)
+
+-- Горячие клавиши для изменения размера окна с помощью Ctrl + стрелки
+map('n', '<C-Down>', ':resize +2<CR>', opts)  -- Увеличить высоту окна вниз
+map('n', '<C-Up>', ':resize -2<CR>', opts)   -- Уменьшить высоту окна вверх
+map('n', '<C-Left>', ':vertical resize -2<CR>', opts)  -- Уменьшить ширину окна влево
+map('n', '<C-Right>', ':vertical resize +2<CR>', opts) -- Увеличить ширину окна вправо
+
+-- Настройка для удаления
+map('n', 'd', '"_d', opts)
+map('n', 'dd', '"_dd', opts)
+map('v', 'd', '"_d', opts)

@@ -1,6 +1,5 @@
 return {
     -- Плагины для автодополнения
-
     "hrsh7th/nvim-cmp",
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",     -- Источник автодополнения для LSP
@@ -22,8 +21,21 @@ return {
             mapping = cmp.mapping.preset.insert({
                 ["<C-Space>"] = cmp.mapping.complete(), -- Открыть меню автодополнения
                 ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Подтвердить выбор
-                ["<A-j>"] = cmp.mapping.select_next_item(), -- Навигация по меню
-                ["<A-k>"] = cmp.mapping.select_prev_item(),
+                ["<A-j>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_next_item()  -- Навигация по меню
+                    else
+                        fallback()  -- В случае, если меню не видно, выполнить стандартное действие
+                    end
+                end, { "i", "s" }),
+
+                ["<A-k>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()  -- Навигация по меню
+                    else
+                        fallback()  -- В случае, если меню не видно, выполнить стандартное действие
+                    end
+                end, { "i", "s" }),
             }),
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },    -- Автодополнение от LSP
@@ -34,3 +46,4 @@ return {
         })
     end
 }
+

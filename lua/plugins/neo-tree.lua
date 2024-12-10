@@ -88,7 +88,7 @@ return {
                   -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
                   file_size = {
                     enabled = true,
-                    required_width = 64, -- min width of window required to show this column
+                    required_width = 40, -- min width of window required to show this column
                   },
                   type = {
                     enabled = true,
@@ -112,7 +112,7 @@ return {
                 commands = {},
                 window = {
                   position = "left",
-                  width = 40,
+                  width = 30,
                   mapping_options = {
                     noremap = true,
                     nowait = true,

@@ -1,9 +1,10 @@
 -- Общие настройки Neovim
 vim.o.clipboard = 'unnamedplus'       -- Буффер обмена
-vim.o.textwidth = 80                  -- Макс ширина текста
-vim.o.wrap =  false                    -- Включаем визуальный перенос строк
+-- Отключаем автоматический перенос в режиме ввода
+vim.o.formatoptions = vim.o.formatoptions:gsub("t", "")
+vim.o.textwidth = 80                  -- макс ширина текста
+vim.o.wrap = true                    -- Включаем визуальный перенос строк
 vim.o.number = true                   -- Включить нумерацию строк
-vim.o.relativenumber = true
 vim.o.shiftwidth = 4                  -- Размер отступа при использовании табуляции
 vim.o.expandtab = true                -- Преобразование табуляции в пробелы
 vim.o.smartindent = true              -- Умная автоиндентация
@@ -33,4 +34,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format({ async = true })
     end,
 })
+
 

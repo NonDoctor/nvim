@@ -22,7 +22,7 @@ return {
         config = function()
             require("mason-lspconfig").setup({
                 ensure_installed = { 
-                    "pyright", "gopls", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman" 
+                    "pyright", "gopls", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman"
                 }, -- Список LSP-серверов для автоматической установки
                 automatic_installation = true,
             })
