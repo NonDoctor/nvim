@@ -22,7 +22,8 @@ return {
         config = function()
             require("mason-lspconfig").setup({
                 ensure_installed = { 
-                    "pyright", "gopls", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman"
+                    "pyright", "gopls", "dockerls", "jsonls", "lua_ls", "yamlls", "taplo", "marksman",
+                    "html","ts_ls", "prettier" -- Добавлено для HTML и TypeScript
                 }, -- Список LSP-серверов для автоматической установки
                 automatic_installation = true,
             })
@@ -58,6 +59,17 @@ return {
 
             -- Настройка LSP для Marksman
             lspconfig.marksman.setup({})
+
+            -- Настройка LSP для HTML (html)
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+              capabilities.textDocument.completion.completionItem.snippetSupport = true
+              
+              lspconfig.html.setup {
+                capabilities = capabilities,
+              }
+
+            -- Настройка LSP для TypeScript и JavaScript (tsserver)
+            lspconfig.ts_ls.setup({})
         end,
     },
 
@@ -69,6 +81,7 @@ return {
             require("mason-null-ls").setup({
                 ensure_installed = { 
                     "black", "goimports", "golangci_lint", "prettier", 
+                    "eslint_d",  -- Добавлено для ESLint
                 }, -- Утилиты для автоматической установки
                 automatic_installation = true,
             })
@@ -77,19 +90,24 @@ return {
             local null_ls = require("null-ls")
             null_ls.setup({
                 sources = {
-                    -- Python: black for formatting
+                    -- Python: black для форматирования
                     null_ls.builtins.formatting.black,
                     
-                    -- Go: goimports for formatting
+                    -- Go: goimports для форматирования
                     null_ls.builtins.formatting.goimports,
                     
-                    -- Go: golangci-lint for diagnostics
+                    -- Go: golangci-lint для диагностики
                     null_ls.builtins.diagnostics.golangci_lint.with({
-                        extra_args = { "--fast" },  -- You can pass additional args if needed
+                        extra_args = { "--fast" },  -- Дополнительные параметры
                     }),
 
-                    -- Prettier: Code formatter
+                    -- Prettier: Форматирование кода
                     null_ls.builtins.formatting.prettier,
+                    
+                    -- ESLint: Линтинг для JavaScript/TypeScript
+                    null_ls.builtins.diagnostics.eslint_d.with({
+                        extra_args = { "--fix" },  -- Можно добавить дополнительные параметры
+                    }),
                 },
             })
         end,
