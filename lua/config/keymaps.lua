@@ -136,3 +136,13 @@ map('n', '<C-Right>', ':vertical resize +2<CR>', opts) -- Увеличить ш�
 map('n', 'd', '"_d', opts)
 map('n', 'dd', '"_dd', opts)
 map('v', 'd', '"_d', opts)
+
+-- Глобальная функция для вставки строки '# type: ignore' в конец текущей строки
+_G.insert_type_ignore = function()
+    local line = vim.api.nvim_get_current_line()
+    local new_line = line .. " # type: ignore"
+    vim.api.nvim_set_current_line(new_line)
+end
+
+-- Создание команды для режима normal
+map('n', '"', ':lua insert_type_ignore()<CR>', opts)
