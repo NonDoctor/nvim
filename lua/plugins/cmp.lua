@@ -8,11 +8,11 @@ return {
         "saadparwaiz1/cmp_luasnip", -- Источник для сниппетов
         "L3MON4D3/LuaSnip",         -- Плагин для сниппетов
         "onsails/lspkind.nvim",
-        "CopilotC-Nvim/CopilotChat.nvim", -- Плагин CopilotChat
-        { "github/copilot.vim" },          -- Зависимость для CopilotChat
-        { "nvim-lua/plenary.nvim", branch = "master" },  -- Зависимость для CopilotChat
+        -- "CopilotC-Nvim/CopilotChat.nvim", -- Плагин CopilotChat
+        -- { "github/copilot.vim" },          -- Зависимость для CopilotChat
+        -- { "nvim-lua/plenary.nvim", branch = "master" },  -- Зависимость для CopilotChat
     },
-    build = "make tiktoken",  -- Команда сборки для CopilotChat
+    -- build = "make tiktoken",  -- Команда сборки для CopilotChat
     config = function()
         local cmp = require("cmp")
         local luasnip = require("luasnip")
@@ -58,7 +58,7 @@ return {
                 { name = "luasnip" },     -- Сниппеты
                 { name = "buffer" },      -- Слова из буфера
                 { name = "path" },        -- Пути к файлам
-                { name = "copilot" },     -- Copilot
+                -- { name = "copilot" },     -- Copilot
             }
         })
     end
